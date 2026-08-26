@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   extractQuestions,
   extractAnswers,
+  mapAnswers,
 } from "@repo/ai";
 
 export async function POST(request: Request) {
@@ -42,9 +43,12 @@ export async function POST(request: Request) {
         extractAnswers(answerPages),
       ]);
 
+    const mappings = await mapAnswers(questions, answers);
+
     return NextResponse.json({
       questions,
       answers,
+      mappings,
     });
   } catch (error) {
     console.error(
