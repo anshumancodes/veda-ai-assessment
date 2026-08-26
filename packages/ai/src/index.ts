@@ -1,4 +1,7 @@
-export * from "./schemas/schemas.js";
-export * from "./extract-questions.js";
-export * from "./extract-answers.js";
-export * from "./map-answers.js";
+export * from "./schemas/schemas";
+import { extractAnswers } from "./extract-answers";
+import { extractQuestions } from "./extract-questions";
+import { mapAnswers } from "./map-answers";
+
+
+export {extractAnswers,extractQuestions,mapAnswers}
