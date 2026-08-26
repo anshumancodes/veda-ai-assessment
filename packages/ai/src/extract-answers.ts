@@ -1,5 +1,5 @@
-import { answerExtractionSchema, type Answer } from "./schemas/schemas.js";
-import { gemini, GEMINI_MODEL } from "./client.js";
+import { answerExtractionSchema, type Answer } from "./schemas/schemas";
+import { gemini, GEMINI_MODEL } from "./client";
 
 const ANSWER_PROMPT = `
 You are analyzing a student's handwritten answer sheet.
