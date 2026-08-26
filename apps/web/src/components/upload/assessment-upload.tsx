@@ -109,12 +109,135 @@ export function AssessmentUpload() {
     );
   }
 
-  //Upload / processing phase 
+  // Processing phase — full-screen loading
+  if (phase === "processing") {
+    return (
+      <main className="min-h-screen bg-background">
+        <TopNav />
+        <section
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "calc(100vh - 56px)",
+            gap: 28,
+          }}
+        >
+          {/* Animated star */}
+          <div style={{ position: "relative" }}>
+            {/* Outer glow rings */}
+            <div
+              style={{
+                position: "absolute",
+                inset: -28,
+                borderRadius: "50%",
+                border: "1.5px solid rgba(232, 82, 26, 0.12)",
+                animation: "ring-pulse 2.5s ease-in-out infinite",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: -14,
+                borderRadius: "50%",
+                border: "1.5px solid rgba(232, 82, 26, 0.22)",
+                animation: "ring-pulse 2.5s ease-in-out 0.4s infinite",
+              }}
+            />
+            {/* Star container */}
+            <div
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #fff4ef 0%, #ffe8db 100%)",
+                border: "1.5px solid rgba(232, 82, 26, 0.2)",
+                boxShadow: "0 8px 32px rgba(232, 82, 26, 0.18)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                animation: "star-breathe 2s ease-in-out infinite",
+              }}
+            >
+              <Image
+                src="/orange_star.png"
+                alt="Processing"
+                width={44}
+                height={44}
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+          </div>
+
+          {/* Text */}
+          <div style={{ textAlign: "center" }}>
+            <p
+              style={{
+                fontSize: 18,
+                fontWeight: 600,
+                color: "#1a1a1a",
+                letterSpacing: "-0.02em",
+                marginBottom: 6,
+              }}
+            >
+              Extracting…
+            </p>
+            <p style={{ fontSize: 13, color: "#8a8480", lineHeight: 1.5 }}>
+              Analyzing questions, answers, and mapping relationships
+            </p>
+          </div>
+
+          {/* Animated dots */}
+          <div style={{ display: "flex", gap: 6 }}>
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "#e8521a",
+                  opacity: 0.4,
+                  animation: `dot-bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
+                }}
+              />
+            ))}
+          </div>
+        </section>
+
+        <style>{`
+          @keyframes ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50%       { transform: scale(1.08); opacity: 0.15; }
+          }
+          @keyframes star-breathe {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.06); }
+          }
+          @keyframes dot-bounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+            40%            { transform: translateY(-6px); opacity: 1; }
+          }
+          @keyframes ping-slow {
+            0%   { transform: scale(1);    opacity: 0.8; }
+            50%  { transform: scale(1.15); opacity: 0.4; }
+            100% { transform: scale(1);    opacity: 0.8; }
+          }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
+      </main>
+    );
+  }
+
+  //Upload / idle phase
   return (
     <main className="min-h-screen bg-background">
       <TopNav />
 
-      <section className="mx-auto flex min-h-[calc(100vh-56px)] max-w-4xl flex-col items-center justify-center px-6 py-12">
+      <section className="mx-auto flex min-h-[calc(100vh-56px)]  flex-col items-center justify-center px-6 py-12">
         <div className="mb-8 max-w-2xl text-center">
           <h1 className="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Upload{" "}
@@ -136,7 +259,7 @@ export function AssessmentUpload() {
 
         <div className="w-full max-w-3xl">
           {/* Mascot */}
-          <div className="mb-8 flex justify-center">
+          <div className="mb-8 flex justify-center mb-20">
             <div
               style={{
                 position: "relative",
@@ -185,6 +308,7 @@ export function AssessmentUpload() {
                   width: 96,
                   height: 96,
                   borderRadius: "50%",
+                 
                   background: "linear-gradient(135deg, #fde4d5 0%, #ffc4a0 100%)",
                   border: "3px solid #fff",
                   boxShadow: "0 4px 24px rgba(232, 82, 26, 0.2)",
@@ -212,6 +336,7 @@ export function AssessmentUpload() {
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: 20,
+              marginTop: 40,
               marginBottom: 32,
             }}
           >
@@ -244,38 +369,12 @@ export function AssessmentUpload() {
             </div>
           )}
 
-          {/* Processing overlay card */}
-          {phase === "processing" && (
-            <div
-              style={{
-                marginBottom: 20,
-                padding: "14px 18px",
-                borderRadius: 12,
-                background: "#fff8f5",
-                border: "1.5px solid rgba(232, 82, 26, 0.25)",
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-              }}
-            >
-              <SpinnerIcon />
-              <div>
-                <p style={{ fontSize: 13, fontWeight: 600, color: "#2a2520" }}>
-                  Analyzing your documents…
-                </p>
-                <p style={{ fontSize: 12, color: "#8a8480", marginTop: 2 }}>
-                  Extracting questions, answers, and mapping relationships
-                </p>
-              </div>
-            </div>
-          )}
-
           {/* Start Mapping button */}
           <div className="flex flex-col items-center gap-3">
             <button
               type="button"
               id="start-mapping-btn"
-              disabled={!canAnalyze || phase === "processing"}
+              disabled={!canAnalyze}
               onClick={handleAnalyze}
               style={{
                 display: "inline-flex",
@@ -284,23 +383,21 @@ export function AssessmentUpload() {
                 padding: "10px 24px",
                 borderRadius: 999,
                 border: "none",
-                background:
-                  canAnalyze && phase === "idle"
+                background: canAnalyze
                     ? "linear-gradient(135deg, #e8521a, #ff7a45)"
                     : "#d4cfc9",
-                color: canAnalyze && phase === "idle" ? "#fff" : "#8a8480",
+                color: canAnalyze ? "#fff" : "#8a8480",
                 fontSize: 14,
                 fontWeight: 600,
-                cursor: canAnalyze && phase === "idle" ? "pointer" : "not-allowed",
+                cursor: canAnalyze ? "pointer" : "not-allowed",
                 transition: "all 0.2s ease",
-                boxShadow:
-                  canAnalyze && phase === "idle"
+                boxShadow: canAnalyze
                     ? "0 4px 16px rgba(232, 82, 26, 0.35)"
                     : "none",
                 letterSpacing: "-0.01em",
               }}
             >
-              {phase === "processing" ? "Analyzing…" : "Start Mapping"}
+              Start Mapping
               <svg
                 width="16"
                 height="16"
@@ -343,39 +440,5 @@ export function AssessmentUpload() {
         </div>
       </section>
     </main>
-  );
-}
-
-// inline spinner icon 
-
-function SpinnerIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{
-        animation: "spin 0.8s linear infinite",
-        flexShrink: 0,
-        color: "#e8521a",
-      }}
-    >
-      <circle
-        cx="10"
-        cy="10"
-        r="8"
-        stroke="currentColor"
-        strokeOpacity="0.2"
-        strokeWidth="2"
-      />
-      <path
-        d="M10 2a8 8 0 0 1 8 8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }

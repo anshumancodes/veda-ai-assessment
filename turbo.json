@@ -5,7 +5,8 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
+      "env": ["GEMINI_API_KEY"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -17,5 +18,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": ["NODE_ENV"]
 }
