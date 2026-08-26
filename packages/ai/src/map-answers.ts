@@ -3,8 +3,8 @@ import {
   type Answer,
   type Question,
   type AnswerMapping,
-} from "./schemas/schemas.js";
-import { gemini, GEMINI_MODEL } from "./client.js";
+} from "./schemas/schemas";
+import { gemini, GEMINI_MODEL } from "./client";
 
 export async function mapAnswers(
   questions: Question[],
