@@ -1,5 +1,5 @@
-import { questionExtractionSchema, type Question } from "./schemas/schemas.js";
-import { gemini, GEMINI_MODEL } from "./client.js";
+import { questionExtractionSchema, type Question } from "./schemas/schemas";
+import { gemini, GEMINI_MODEL } from "./client";
 
 const QUESTION_PROMPT = `
 You are extracting questions from a question paper.
