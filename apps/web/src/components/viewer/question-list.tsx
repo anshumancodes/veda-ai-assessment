@@ -39,6 +39,8 @@ export function QuestionList({
     }
   }
 
+  const answeredCount = questions.filter((q) => mappingByQuestion.has(q.id)).length;
+
   return (
     <div
       style={{
@@ -51,25 +53,60 @@ export function QuestionList({
       {/* Header */}
       <div
         style={{
-          padding: "16px 16px 12px",
-          borderBottom: "1px solid #e8e4df",
+          padding: "14px 16px 12px",
+          borderBottom: "1px solid #f0eeeb",
           flexShrink: 0,
+          background: "#fff",
         }}
       >
-        <p
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              color: "#a09a94",
+              textTransform: "uppercase",
+            }}
+          >
+            Questions
+          </p>
+          {/* Progress pill */}
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 600,
+              color: answeredCount === questions.length ? "#16a34a" : "#8a8480",
+              background: answeredCount === questions.length ? "#dcfce7" : "#f4f1ee",
+              padding: "2px 8px",
+              borderRadius: 99,
+              transition: "background 0.2s, color 0.2s",
+            }}
+          >
+            {answeredCount}/{questions.length} mapped
+          </span>
+        </div>
+
+        {/* Progress bar */}
+        <div
           style={{
-            fontSize: 11,
-            fontWeight: 600,
-            letterSpacing: "0.06em",
-            color: "#8a8480",
-            textTransform: "uppercase",
+            marginTop: 8,
+            height: 3,
+            borderRadius: 99,
+            background: "#f0eeeb",
+            overflow: "hidden",
           }}
         >
-          Questions
-        </p>
-        <p style={{ fontSize: 13, color: "#4a4540", marginTop: 2 }}>
-          {questions.length} total
-        </p>
+          <div
+            style={{
+              height: "100%",
+              borderRadius: 99,
+              background: "linear-gradient(90deg, #e8521a, #ff7a45)",
+              width: questions.length > 0 ? `${(answeredCount / questions.length) * 100}%` : "0%",
+              transition: "width 0.4s ease",
+            }}
+          />
+        </div>
       </div>
 
       {/* Scrollable list */}
@@ -77,7 +114,7 @@ export function QuestionList({
         style={{
           flex: 1,
           overflowY: "auto",
-          padding: "8px 8px",
+          padding: "6px 8px",
         }}
       >
         {questions.map((question) => {
@@ -95,15 +132,15 @@ export function QuestionList({
                 display: "block",
                 width: "100%",
                 textAlign: "left",
-                padding: "10px 12px",
+                padding: "9px 12px 9px 14px",
                 borderRadius: 10,
                 border: isActive
-                  ? "1.5px solid rgba(232, 82, 26, 0.4)"
+                  ? "1.5px solid rgba(232, 82, 26, 0.35)"
                   : "1.5px solid transparent",
                 background: isActive ? "#fff8f5" : "transparent",
                 cursor: "pointer",
                 transition: "background 0.15s, border-color 0.15s",
-                marginBottom: 2,
+                marginBottom: 1,
                 position: "relative",
               }}
             >
@@ -118,7 +155,7 @@ export function QuestionList({
                     width: 3,
                     height: "60%",
                     borderRadius: "0 2px 2px 0",
-                    background: "#e8521a",
+                    background: "linear-gradient(180deg, #e8521a, #ff7a45)",
                   }}
                 />
               )}
@@ -179,13 +216,14 @@ export function QuestionList({
               <p
                 style={{
                   fontSize: 12,
-                  color: "#6b6560",
+                  color: isActive ? "#4a4540" : "#6b6560",
                   lineHeight: 1.45,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: "vertical",
                   overflow: "hidden",
                   margin: 0,
+                  transition: "color 0.15s",
                 }}
               >
                 {question.text}
@@ -195,8 +233,7 @@ export function QuestionList({
               <p
                 style={{
                   fontSize: 10,
-                  color: "#a09a94",
-                  marginTop: 4,
+                  color: "#b4aea8",
                   margin: "4px 0 0",
                 }}
               >
