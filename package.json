@@ -13,8 +13,8 @@
     "turbo": "^2.10.11",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.26.0",
   "engines": {
-    "node": ">=18"
+    "node": "22.x"
   }
 }
