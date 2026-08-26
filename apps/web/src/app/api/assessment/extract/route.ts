@@ -1,32 +1,60 @@
 import { NextResponse } from "next/server";
-import { extractQuestions } from "@repo/ai";
+
+import {
+  extractQuestions,
+  extractAnswers,
+} from "@repo/ai";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const pages = body.pages;
+    const questionPages = body.questionPages;
+    const answerPages = body.answerPages;
 
-    if (!Array.isArray(pages) || pages.length === 0) {
+    if (
+      !Array.isArray(questionPages) ||
+      questionPages.length === 0
+    ) {
       return NextResponse.json(
         {
-          error: "No document pages provided",
+          error: "No question paper pages provided",
         },
         { status: 400 },
       );
     }
 
-    const questions = await extractQuestions(pages);
+    if (
+      !Array.isArray(answerPages) ||
+      answerPages.length === 0
+    ) {
+      return NextResponse.json(
+        {
+          error: "No answer sheet pages provided",
+        },
+        { status: 400 },
+      );
+    }
+
+    const [questions, answers] =
+      await Promise.all([
+        extractQuestions(questionPages),
+        extractAnswers(answerPages),
+      ]);
 
     return NextResponse.json({
       questions,
+      answers,
     });
   } catch (error) {
-    console.error("Question extraction failed:", error);
+    console.error(
+      "Assessment extraction failed:",
+      error,
+    );
 
     return NextResponse.json(
       {
-        error: "Failed to extract questions",
+        error: "Failed to extract assessment",
       },
       { status: 500 },
     );
