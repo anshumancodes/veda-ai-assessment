@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { Question, Answer, AnswerMapping, AnswerRegion } from "@repo/ai";
 import type { DocumentPage } from "@repo/types/types";
 import { QuestionList } from "./question-list";
@@ -80,15 +81,15 @@ export function AssessmentViewer({
       {/* Viewer header */}
       <header
         style={{
-          background: "rgba(255,255,255,0.85)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          background: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
           borderBottom: "1px solid #e8e4df",
           height: 56,
           display: "flex",
           alignItems: "center",
           padding: "0 16px",
-          gap: 12,
+          gap: 10,
           flexShrink: 0,
           zIndex: 10,
         }}
@@ -100,9 +101,9 @@ export function AssessmentViewer({
           onClick={onBack}
           aria-label="Back to upload"
           style={{
-            width: 32,
-            height: 32,
-            borderRadius: 8,
+            width: 30,
+            height: 30,
+            borderRadius: 7,
             border: "1px solid #e2ddd8",
             background: "#fff",
             display: "flex",
@@ -110,33 +111,67 @@ export function AssessmentViewer({
             justifyContent: "center",
             cursor: "pointer",
             flexShrink: 0,
+            transition: "background 0.15s",
           }}
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 12L6 8L10 4"
-              stroke="#6b6560"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 12L6 8L10 4" stroke="#6b6560" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
+
+        {/* Divider */}
+        <div style={{ width: 1, height: 20, background: "#e2ddd8" }} />
+
+        {/* Brand logo */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+          <div
+            style={{
+              width: 26,
+              height: 26,
+              borderRadius: 7,
+              background: "linear-gradient(135deg, #fff0eb 0%, #ffe0d0 100%)",
+              border: "1px solid rgba(232, 82, 26, 0.2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              src="/orange_star.png"
+              alt="Veda AI"
+              width={16}
+              height={16}
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+          <span
+            style={{
+              fontSize: 13,
+              fontWeight: 700,
+              color: "#1a1a1a",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            veda
+          </span>
+        </div>
+
+        {/* Breadcrumb separator */}
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" style={{ color: "#c4bfba", flexShrink: 0 }}>
+          <path d="M5 3L9 7L5 11" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
 
         {/* Title */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <p
             style={{
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: 600,
               color: "#1a1a1a",
               letterSpacing: "-0.01em",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
           >
             Assessment Review
@@ -147,23 +182,11 @@ export function AssessmentViewer({
         </div>
 
         {/* Stats chips */}
-        <div style={{ display: "flex", gap: 8 }}>
-          <StatChip
-            label="Questions"
-            value={questions.length}
-            color="#4a4540"
-          />
-          <StatChip
-            label="Answers"
-            value={answers.length}
-            color="#e8521a"
-          />
+        <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+          <StatChip label="Questions" value={questions.length} color="#4a4540" />
+          <StatChip label="Answers" value={answers.length} color="#e8521a" />
           {unmatchedAnswers.length > 0 && (
-            <StatChip
-              label="Unmatched"
-              value={unmatchedAnswers.length}
-              color="#ca8a04"
-            />
+            <StatChip label="Unmatched" value={unmatchedAnswers.length} color="#ca8a04" />
           )}
         </div>
       </header>
@@ -213,21 +236,28 @@ export function AssessmentViewer({
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
+            background: "#f7f5f2",
           }}
         >
           {/* Instruction bar */}
           {activeQuestionId === null && (
             <div
               style={{
-                padding: "10px 20px",
-                background: "rgba(255,255,255,0.7)",
+                padding: "9px 20px",
+                background: "rgba(255,255,255,0.75)",
                 borderBottom: "1px solid #e8e4df",
                 fontSize: 12,
                 color: "#8a8480",
                 flexShrink: 0,
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
               }}
             >
-              ← Select a question to highlight its answer on the sheet
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                <path d="M10 12L6 8L10 4" stroke="#c4bfba" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Select a question to highlight its answer on the sheet
             </div>
           )}
 
@@ -300,7 +330,7 @@ function ActiveQuestionBar({
       style={{
         padding: "8px 20px",
         background: "#fff8f5",
-        borderBottom: "1px solid rgba(232, 82, 26, 0.2)",
+        borderBottom: "1px solid rgba(232, 82, 26, 0.18)",
         display: "flex",
         alignItems: "center",
         gap: 12,
@@ -396,6 +426,7 @@ function UnmatchedSection({
             background: "#fffbf0",
             cursor: "pointer",
             marginBottom: 4,
+            transition: "background 0.15s",
           }}
         >
           <p
