@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import type { Question, Answer, AnswerMapping, AnswerRegion } from "@repo/ai";
 import type { DocumentPage } from "@repo/types/types";
 import { QuestionList } from "./question-list";
@@ -121,45 +120,6 @@ export function AssessmentViewer({
 
         {/* Divider */}
         <div style={{ width: 1, height: 20, background: "#e2ddd8" }} />
-
-        {/* Brand logo */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-          <div
-            style={{
-              width: 26,
-              height: 26,
-              borderRadius: 7,
-              background: "linear-gradient(135deg, #fff0eb 0%, #ffe0d0 100%)",
-              border: "1px solid rgba(232, 82, 26, 0.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Image
-              src="/orange_star.png"
-              alt="Veda AI"
-              width={16}
-              height={16}
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-          <span
-            style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: "#1a1a1a",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            veda
-          </span>
-        </div>
-
-        {/* Breadcrumb separator */}
-        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" style={{ color: "#c4bfba", flexShrink: 0 }}>
-          <path d="M5 3L9 7L5 11" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
 
         {/* Title */}
         <div style={{ flex: 1, minWidth: 0 }}>
